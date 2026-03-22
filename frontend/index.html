@@ -5,28 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Store - Catálogo</title>
     <meta name="description" content="Catálogo de productos de Food Store">
-    <style>
-      :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-      body{margin:0;display:flex;flex-direction:column;min-height:100vh}
-      header,footer{background:#111;color:#fff;padding:1rem}
-      .container{display:flex;gap:1rem;padding:1rem;flex:1}
-      aside{width:200px}
-      nav ul,aside ul{list-style:none;padding:0;margin:0}
-      nav a,aside a{color:inherit;text-decoration:none}
-      main{flex:1}
-      .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
-      article{border:1px solid #ddd;padding:1rem;border-radius:6px;background:#fff}
-      img{max-width:100%;height:auto;display:block}
-      .price{color:#c0392b;font-size:1.1rem}
-      .btn{display:inline-block;padding:.5rem .75rem;background:#27ae60;color:#fff;border-radius:4px;border:0;cursor:pointer}
-    </style>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <header>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-        <h1 style="margin:0">Food Store</h1>
+      <div class="header-content">
+        <h1>Food Store</h1>
         <nav aria-label="Main navigation">
-          <ul style="display:flex;gap:1rem;margin:0;padding:0;">
+          <ul>
             <li><a href="#">Inicio</a></li>
             <li><a href="#">Mis Pedidos</a></li>
             <li><a href="#">Carrito</a></li>
@@ -48,9 +34,9 @@
 
       <main>
         <section aria-label="Buscador">
-          <form role="search" action="#" method="get" style="margin-bottom:1rem;display:flex;gap:.5rem;">
-            <label for="search" style="position:absolute;left:-9999px">Buscar productos</label>
-            <input id="search" name="q" type="search" placeholder="Buscar productos..." style="flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px">
+          <form role="search" action="#" method="get">
+            <label for="search">Buscar productos</label>
+            <input id="search" name="q" type="search" placeholder="Buscar productos...">
             <button class="btn" type="submit">Buscar</button>
           </form>
         </section>
@@ -76,7 +62,7 @@
     </div>
 
     <footer>
-      <p style="margin:0">Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
+      <p>Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
     </footer>
   </body>
 </html>
