@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel de Administración</title>
+    <meta name="description" content="Panel de administración de productos">
+    <style>
+      :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+      body{margin:0;padding:0;background:#f5f5f5;color:#222}
+      header{background:#111;color:#fff;padding:1rem;display:flex;align-items:center;justify-content:space-between}
+      .container{max-width:1100px;margin:1rem auto;padding:1rem;background:#fff;border-radius:6px}
+      table{width:100%;border-collapse:collapse;margin-top:1rem}
+      th,td{padding:.5rem;border:1px solid #e1e1e1;text-align:left}
+      th{background:#fafafa}
+      img.thumb{width:80px;height:auto;border-radius:4px}
+      .actions a{margin-right:.5rem;color:#1a73e8;text-decoration:none}
+      .btn{display:inline-block;padding:.4rem .6rem;background:#27ae60;color:#fff;border-radius:4px;text-decoration:none}
+      form{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+      input[type="text"],input[type="number"],select{padding:.4rem;border:1px solid #ccc;border-radius:4px}
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 style="margin:0">Panel de Administración</h1>
+      <nav>
+        <a class="btn" href="index.html">Volver a la Tienda</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section aria-labelledby="inventory-heading">
+        <h2 id="inventory-heading">Gestión de Inventario</h2>
+
+        <table aria-describedby="inventory-desc">
+          <caption id="inventory-desc">Tabla con el inventario actual</caption>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><img class="thumb" src="https://via.placeholder.com/120x80?text=Hamburguesa" alt="Hamburguesa"></td>
+              <td>Hamburguesa Clásica</td>
+              <td>Hamburguesas</td>
+              <td>$9.99</td>
+              <td>25</td>
+              <td class="actions"><a href="#">Editar</a><a href="#">Eliminar</a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><img class="thumb" src="https://via.placeholder.com/120x80?text=Pizza" alt="Pizza"></td>
+              <td>Pizza Margarita</td>
+              <td>Pizzas</td>
+              <td>$12.50</td>
+              <td>12</td>
+              <td class="actions"><a href="#">Editar</a><a href="#">Eliminar</a></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><img class="thumb" src="https://via.placeholder.com/120x80?text=Bebida" alt="Bebida"></td>
+              <td>Refresco Cola</td>
+              <td>Bebidas</td>
+              <td>$2.50</td>
+              <td>40</td>
+              <td class="actions"><a href="#">Editar</a><a href="#">Eliminar</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <details style="margin-top:1rem">
+        <summary>Agregar Producto Rápido</summary>
+        <form action="#" method="post" aria-label="Agregar producto rápido">
+          <label for="p-name" style="display:none">Nombre</label>
+          <input id="p-name" name="name" type="text" placeholder="Nombre del producto" required>
+
+          <label for="p-price" style="display:none">Precio</label>
+          <input id="p-price" name="price" type="number" step="0.01" placeholder="Precio" required>
+
+          <label for="p-cat" style="display:none">Categoría</label>
+          <select id="p-cat" name="category" required>
+            <option value="">Seleccione categoría</option>
+            <option value="Hamburguesas">Hamburguesas</option>
+            <option value="Pizzas">Pizzas</option>
+            <option value="Bebidas">Bebidas</option>
+          </select>
+
+          <button class="btn" type="submit">Agregar Producto</button>
+        </form>
+      </details>
+    </main>
+  </body>
+</html>
