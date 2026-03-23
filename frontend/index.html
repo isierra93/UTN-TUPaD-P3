@@ -3,67 +3,74 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Food Store - Catálogo</title>
+    <title>Food Store — Catálogo</title>
     <meta name="description" content="Catálogo de productos de Food Store">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/styles.css">
   </head>
   <body>
-    <header>
-      <div class="header-content">
-        <h1>Food Store</h1>
-        <nav aria-label="Main navigation">
-          <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Mis Pedidos</a></li>
-            <li><a href="#">Carrito</a></li>
-            <li><a href="html/admin.html">Panel Admin</a></li>
+    <!-- Header -->
+    <header class="header">
+      <div class="header__inner">
+        <a href="index.html" class="header__brand">Food<span>Store</span></a>
+        <nav class="header__nav" aria-label="Navegación principal">
+          <ul class="header__nav-list">
+            <li><a href="index.html" class="header__nav-link">Inicio</a></li>
+            <li><a href="#" class="header__nav-link">Mis Pedidos</a></li>
+            <li><a href="#" class="header__nav-link">Carrito</a></li>
+            <li><a href="html/admin.html" class="header__nav-link">Admin</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <div class="container">
-      <aside>
-        <h2>Categorías</h2>
-        <ul>
-          <li><a href="#">Hamburguesas</a></li>
-          <li><a href="#">Pizzas</a></li>
-          <li><a href="#">Bebidas</a></li>
-        </ul>
+    <!-- Hero -->
+    <section class="hero" aria-label="Bienvenida">
+      <span class="hero__emoji" aria-hidden="true">&#x1F354;</span>
+      <p class="hero__tagline">Comida casera, sabor real</p>
+      <h1 class="hero__title">Tu delivery favorito</h1>
+      <p class="hero__subtitle">Hamburguesas, pizzas, sándwiches y mucho más. Todo preparado con ingredientes frescos.</p>
+    </section>
+
+    <!-- Store Layout -->
+    <div class="store-layout">
+      <!-- Sidebar -->
+      <aside class="store-layout__sidebar">
+        <section class="categories" aria-label="Categorías">
+          <h2 class="categories__heading">Categorías</h2>
+          <ul class="categories__list" id="list-categories"></ul>
+        </section>
       </aside>
 
-      <main>
-        <section aria-label="Buscador">
-          <form role="search" action="#" method="get">
-            <label for="search">Buscar productos</label>
-            <input id="search" name="q" type="search" placeholder="Buscar productos...">
+      <!-- Main -->
+      <main class="store-layout__main">
+        <!-- Search -->
+        <section class="search" aria-label="Buscador">
+          <form class="search__form" role="search" action="#" method="get">
+            <label for="search" class="sr-only">Buscar productos</label>
+            <input
+              class="search__input"
+              id="search"
+              name="q"
+              type="search"
+              placeholder="Buscar productos..."
+            >
             <button class="btn" type="submit">Buscar</button>
           </form>
         </section>
 
+        <!-- Products -->
         <section class="products" aria-label="Grilla de productos">
-          <article>
-            <img src="#" alt="Hamburguesa clásica">
-            <h3>Hamburguesa Clásica</h3>
-            <p>Carne de res, lechuga, tomate, queso y la salsa especial de la casa.</p>
-            <p class="price"><strong>$9.99</strong></p>
-            <button class="btn" type="button">Agregar</button>
-          </article>
-
-          <article>
-            <img src="#" alt="Pizza Margarita">
-            <h3>Pizza Margarita</h3>
-            <p>Masa tradicional, salsa de tomate, mozzarella fresca y albahaca.</p>
-            <p class="price"><strong>$12.50</strong></p>
-            <button class="btn" type="button">Agregar</button>
-          </article>
+          <h2 class="products__heading">Nuestros productos</h2>
+          <div class="products__grid" id="products-container"></div>
         </section>
       </main>
     </div>
 
-    <footer>
-      <p>Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer__text">Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
     </footer>
+
     <script type="module" src="js/data.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>

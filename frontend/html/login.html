@@ -1,47 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Store - Iniciar Sesión</title>
-    <link rel="stylesheet" href="../css/login.css">
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-form-wrapper">
-            <h1 class="logo-title">Food Store</h1>
-            <p class="subtitle">Iniciar Sesión</p>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Food Store — Iniciar Sesión</title>
+    <meta name="description" content="Iniciá sesión en Food Store">
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <main class="login">
+      <div class="login__card">
+        <h1 class="login__brand">FoodStore</h1>
+        <p class="login__subtitle">Iniciar Sesión</p>
 
-            <form class="login-form">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="Ingresa tu email" 
-                        required
-                    >
-                </div>
+        <form class="login__form" action="#" method="post">
+          <div class="login__field">
+            <label class="login__label" for="email">Email</label>
+            <input
+              class="login__input"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="tu@email.com"
+              required
+            >
+          </div>
 
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Ingresa tu contraseña" 
-                        required
-                    >
-                </div>
+          <div class="login__field">
+            <label class="login__label" for="password">Contraseña</label>
+            <input
+              class="login__input"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Tu contraseña"
+              required
+            >
+          </div>
 
-                <button type="submit" class="btn-ingresar">Ingresar</button>
-            </form>
+          <button class="btn btn--full login__submit" type="submit">Ingresar</button>
+        </form>
 
-            <p class="signup-link">
-                ¿No tenés cuenta? <a href="#">Registrate</a>
-            </p>
-        </div>
-    </div>
-</body>
+        <p class="login__footer">
+          ¿No tenés cuenta? <a href="#">Registrate</a>
+        </p>
+      </div>
+    </main>
+  </body>
 </html>
