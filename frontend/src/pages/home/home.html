@@ -1,0 +1,66 @@
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="../../style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Productos de Food Store">
+  <title>Food Store - Catalálogo de productos</title>
+</head>
+   <!-- Header -->
+    <header class="header">
+        <div class="header__inner">
+            <a href="#" class="header__brand">Food<span>Store</span></a>
+            <nav class="header__nav" aria-label="Navegación principal">
+                <ul class="header__nav-list">
+                    <li><a href="#" class="header__nav-link">Inicio</a></li>
+                    <li><a href="#" class="header__nav-link">Mis Pedidos</a></li>
+                    <li><a href="#" class="header__nav-link">Carrito</a></li>
+                    <li><a href="../admin/admin.html" class="header__nav-link">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Bienvenida">
+        <span class="hero__emoji" aria-hidden="true">&#x1F354;</span>
+        <p class="hero__tagline">Comida casera, sabor real</p>
+        <h1 class="hero__title">Tu delivery favorito</h1>
+        <p class="hero__subtitle">Hamburguesas, pizzas, sándwiches y mucho más. Todo preparado con ingredientes frescos.
+        </p>
+    </section>
+
+    <!-- Store Layout -->
+    <div class="store-layout">
+        <!-- Sidebar -->
+        <aside class="store-layout__sidebar">
+            <section class="categories" aria-label="Categorías">
+                <h2 class="categories__heading">Categorías</h2>
+                <ul class="categories__list" id="list-categories"></ul>
+            </section>
+        </aside>
+
+        <!-- Main -->
+        <main class="store-layout__main">
+            <!-- Search -->
+            <section class="search" aria-label="Buscador">
+                <form class="search__form" role="search" action="#" method="get">
+                    <label for="search" class="sr-only">Buscar productos</label>
+                    <input class="search__input" id="search" name="q" type="search" placeholder="Buscar productos...">
+                    <button class="btn" type="submit">Buscar</button>
+                </form>
+            </section>
+
+            <!-- Products -->
+            <section class="products" aria-label="Grilla de productos">
+                <h2 class="products__heading">Nuestros productos</h2>
+                <div class="products__grid" id="products-container"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer__text">Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
+    </footer>
+    <script type="module" src="home.ts"></script>

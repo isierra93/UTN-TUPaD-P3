@@ -740,9 +740,14 @@ h3 { font-size: 1.1rem; }
   color: var(--clr-tomato-dark);
 }
 
-/* Table layout (hidden on mobile) */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table layout (responsive single source of truth) */
 .table-desktop {
-  display: none;
+  display: table;
   width: 100%;
   border-collapse: collapse;
 }
