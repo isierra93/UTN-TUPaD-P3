@@ -1,4 +1,5 @@
 import type { User } from "../../../types/User";
+import { navigate } from "../../../utils/navigate";
 
 console.log("Login");
 
@@ -17,10 +18,12 @@ loginForm?.addEventListener("submit", (event) => {
     const user = users.find(u => u.email === email && u.password === password);
 
     if (user) {
+        formElement.reset();
         alert(`Bienvenido, ${user.email}!`);
         localStorage.setItem('userData', JSON.stringify(user));
-        formElement.reset();
+        navigate("../home/home.html");
     } else {
+        formElement.reset();
         alert("Email o contraseña incorrectos. Por favor, intenta de nuevo.");
     }
 
