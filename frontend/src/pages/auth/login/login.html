@@ -4,6 +4,7 @@
   <title>Food Store — Iniciar Sesión</title>
   <meta name="description" content="Iniciá sesión en Food Store">
   <link rel="stylesheet" href="../../../style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
 
 <body>
@@ -12,7 +13,7 @@
       <h1 class="login__brand">FoodStore</h1>
       <p class="login__subtitle">Iniciar Sesión</p>
 
-      <form class="login__form" action="#" method="post">
+      <form class="login__form" action="#" method="post" id="login-form">
         <div class="login__field">
           <label class="login__label" for="email">Email</label>
           <input class="login__input" type="email" id="email" name="email" placeholder="tu@email.com" required>
@@ -32,4 +33,5 @@
       </p>
     </div>
   </main>
+  <script type="module" src="login.ts"></script>
 </body>
