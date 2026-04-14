@@ -2,6 +2,9 @@ import type { Product } from "../../types/Product";
 import type { Category } from "../../types/Category";
 import { getProducts } from "../../utils/getProducts";
 import { getCategories } from "../../utils/getCategories";
+import { protectRoute } from "../../main";
+
+protectRoute();
 
 const containerProducts = document.querySelector<HTMLElement>('#products-container');
 if (containerProducts) {

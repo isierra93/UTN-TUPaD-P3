@@ -2,6 +2,9 @@ import type { Product } from "../../types/Product";
 import { getProducts } from "../../utils/getProducts";
 import { getCategories } from "../../utils/getCategories";
 import type { Category } from "../../types/Category";
+import { protectRoute } from "../../main";
+
+protectRoute();
 
 const containerAdminCategories = document.getElementById("p-cat");
 if (containerAdminCategories) {

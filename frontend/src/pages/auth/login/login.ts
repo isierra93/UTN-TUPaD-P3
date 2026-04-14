@@ -1,7 +1,9 @@
+import { protectRoute } from "../../../main";
 import type { User } from "../../../types/User";
 import { navigate } from "../../../utils/navigate";
+import { HOME_URL } from "../../../main";
 
-console.log("Login");
+protectRoute();
 
 const loginForm = document.querySelector<HTMLFormElement>("#login-form")!;
 
@@ -21,7 +23,7 @@ loginForm?.addEventListener("submit", (event) => {
         formElement.reset();
         alert(`Bienvenido, ${user.email}!`);
         localStorage.setItem('userData', JSON.stringify(user));
-        navigate("../home/home.html");
+        navigate(HOME_URL);
     } else {
         formElement.reset();
         alert("Email o contraseña incorrectos. Por favor, intenta de nuevo.");

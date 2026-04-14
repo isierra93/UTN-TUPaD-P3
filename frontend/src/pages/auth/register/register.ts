@@ -1,5 +1,8 @@
+import { protectRoute } from '../../../main';
 import type { User } from '../../../types/User';
 import { navigate } from '../../../utils/navigate';
+
+protectRoute();
 
 const registerForm = document.querySelector('#register-form') as HTMLFormElement;
 
