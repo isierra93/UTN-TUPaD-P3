@@ -1,9 +1,6 @@
 import { navigate } from "./utils/navigate";
 import { getSession } from "./utils/getSession";
-
-export const LOGIN_URL = '/src/pages/auth/login/login.html';
-export const HOME_URL  = '/src/pages/home/home.html';
-
+import { LOGIN_URL, HOME_URL } from "./utils/relativeUrls";
 
 function isPublicRoute(pathname: string): boolean {
     return (

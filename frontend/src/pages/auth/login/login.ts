@@ -1,7 +1,7 @@
 import { protectRoute } from "../../../main";
 import type { User } from "../../../types/User";
 import { navigate } from "../../../utils/navigate";
-import { HOME_URL } from "../../../main";
+import { HOME_URL } from "../../../utils/relativeUrls";
 
 protectRoute();
 

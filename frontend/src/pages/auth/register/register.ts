@@ -1,6 +1,7 @@
 import { protectRoute } from '../../../main';
 import type { User } from '../../../types/User';
 import { navigate } from '../../../utils/navigate';
+import { LOGIN_URL } from '../../../utils/relativeUrls';
 
 protectRoute();
 
@@ -10,7 +11,7 @@ registerForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const formElement = event.currentTarget as HTMLFormElement;
     const formData = new FormData(formElement);
-    //Todos los usuarios registrados tendrán el rol de "client" por defecto
+    //Todos los usuarios registrados son "client" por defecto
     const user = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
@@ -31,6 +32,6 @@ registerForm?.addEventListener('submit', async (event) => {
         localStorage.setItem('users', JSON.stringify(users));
         alert('Registro exitoso! Ahora puedes ingresar con tu email y contraseña.');
         formElement.reset();
-        navigate("../login/login.html");
+        navigate(LOGIN_URL);
     }
 });

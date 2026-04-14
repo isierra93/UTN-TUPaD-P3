@@ -15,6 +15,7 @@ if (containerCategories) {
     containerCategories.innerHTML = `<p class="loading">Cargando categorías...</p>`;
 }
 
+//Agregar render condicional de admin button
 
 const renderHome = async () => {
     try {
