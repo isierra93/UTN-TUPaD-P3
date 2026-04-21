@@ -43,10 +43,10 @@ function renderAdminProducts(products: Product[]): void {
         tr.innerHTML =
             `<tr>
               <td>${product.id}</td>
-              <td><img class="table-desktop__thumb" src="${product.image}" alt="${product.title}"></td>
-              <td>${product.title}</td>
-              <td>${product.category}</td>
-              <td>$${product.price.toFixed(2)}</td>
+              <td><img class="table-desktop__thumb" src="${product.imagen}" alt="${product.nombre}"></td>
+              <td>${product.nombre}</td>
+              <td>${product.categorias[0]?.nombre || "Sin categoría"}</td>
+              <td>$${product.precio.toFixed(2)}</td>
               <td>${product.stock}</td>
               <td class="table-desktop__actions">
                 <a href="#">Editar</a>
@@ -60,8 +60,8 @@ function renderAdminCategories(categories: Category[]): void {
             if (!containerAdminCategories) return;
             categories.forEach(category => {
                 const option = document.createElement("option");
-                option.value = category.name;
-                option.textContent = category.name;
+                option.value = category.nombre;
+                option.textContent = category.nombre;
                 containerAdminCategories.appendChild(option);
             });
         }

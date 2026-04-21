@@ -46,7 +46,7 @@
             <section class="search" aria-label="Buscador">
                 <form class="search__form" role="search" action="#" method="get">
                     <label for="search" class="sr-only">Buscar productos</label>
-                    <input class="search__input" id="search" name="q" type="search" placeholder="Buscar productos...">
+                    <input class="search__input" id="search" name="q" type="search" placeholder="Buscar productos o categorias...">
                     <button class="btn" type="submit">Buscar</button>
                 </form>
             </section>
@@ -54,6 +54,9 @@
             <!-- Products -->
             <section class="products" aria-label="Grilla de productos">
                 <h2 class="products__heading">Nuestros productos</h2>
+                <div id="no-results" style="display: none; text-align: center; padding: var(--sp-lg);">
+                    <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+                </div>
                 <div class="products__grid" id="products-container"></div>
             </section>
         </main>

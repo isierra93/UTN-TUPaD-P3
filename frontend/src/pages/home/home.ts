@@ -15,6 +15,35 @@ if (containerCategories) {
     containerCategories.innerHTML = `<p class="loading">Cargando categorías...</p>`;
 }
 
+const searchInput = document.querySelector<HTMLInputElement>('#search');
+const noResultsMessage = document.querySelector<HTMLElement>('#no-results');
+
+if (searchInput) {
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const productCards = document.querySelectorAll('.product-card');
+        let visibleCount = 0;
+
+        productCards.forEach(card => {
+            const title = card.querySelector('.product-card__title')?.textContent?.toLowerCase() || '';
+            const category = card.querySelector('.product-card__category')?.textContent?.toLowerCase() || '';
+            
+            const isVisible = title.includes(query) || category.includes(query);
+
+            if (isVisible) {
+                (card as HTMLElement).style.display = 'flex';
+                visibleCount++;
+            } else {
+                (card as HTMLElement).style.display = 'none';
+            }
+        });
+
+        if (noResultsMessage) {
+            noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    });
+}
+
 //Agregar render condicional de admin button
 
 const renderHome = async () => {
