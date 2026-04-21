@@ -85,9 +85,31 @@ function renderProducts(products: Product[]): void {
 function renderCategories(categories: Category[]): void {
     if (!containerCategories) return;
     containerCategories.innerHTML = "";
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="#" class="categories__link">Todos</a>`;
+    li.addEventListener('click', (e) => {
+        e.preventDefault();
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            (card as HTMLElement).style.display = 'flex';
+        });
+    });
+    containerCategories.appendChild(li);
+
     categories.forEach(category => {
         const li = document.createElement("li");
         li.innerHTML = `<a href="#" class="categories__link">${category.nombre}</a>`;
+        li.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {                
+                const categoryText = card.querySelector('.product-card__category')?.textContent || '';
+                const isVisible = categoryText.toLowerCase() === category.nombre.toLowerCase();
+                (card as HTMLElement).style.display = isVisible ? 'flex' : 'none';
+            });
+        });
+
         containerCategories.appendChild(li);
     });
 };
