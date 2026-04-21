@@ -439,6 +439,9 @@ h3 { font-size: 1.1rem; }
   transition: transform var(--transition-base),
               box-shadow var(--transition-base);
   border: 1px solid var(--clr-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .product-card:hover {
@@ -455,6 +458,9 @@ h3 { font-size: 1.1rem; }
 
 .product-card__body {
   padding: var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .product-card__category {
@@ -488,6 +494,8 @@ h3 { font-size: 1.1rem; }
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-sm);
+  margin-top: auto;
+  padding-top: var(--sp-md);
 }
 
 .product-card__price {
