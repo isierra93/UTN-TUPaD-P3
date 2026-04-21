@@ -1,9 +1,14 @@
+import type { Category } from "./Category";
+
 export interface Product {
     id: number;
-    title: string;
-    price: number;
-    description: string;
-    category: string;
-    image: string;
+    eliminado: boolean;
+    createdAt: string;
+    nombre: string;
+    precio: number;
+    descripcion: string;
     stock: number;
+    imagen: string;
+    disponible: boolean;
+    categorias: Category[];
 }

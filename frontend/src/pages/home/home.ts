@@ -39,13 +39,13 @@ function renderProducts(products: Product[]): void {
         const card = document.createElement("article");
         card.classList.add("product-card");
         card.innerHTML = `
-            <img class="product-card__image" src="${product.image}" alt="${product.description}">
+            <img class="product-card__image" src="${product.imagen}" alt="${product.descripcion}" onerror="this.src='https://cdn.producttutor.com/2022/10/16451874451570033394image1-min-ib7z19a601i3rol733qs1.png'">
             <div class="product-card__body">
-                <span class="product-card__category">${product.category}</span>
-                <h3 class="product-card__title">${product.title}</h3>
-                <p class="product-card__desc">${product.description}</p>
+                <span class="product-card__category">${product.categorias[0]?.nombre || 'Sin categoría'}</span>
+                <h3 class="product-card__title">${product.nombre}</h3>
+                <p class="product-card__desc">${product.descripcion}</p>
                 <div class="product-card__footer">
-                <span class="product-card__price">${product.price}</span>
+                <span class="product-card__price">${product.precio}</span>
                 <button class="btn" type="button">Agregar</button>
                 </div>
             </div>`;
@@ -58,7 +58,7 @@ function renderCategories(categories: Category[]): void {
     containerCategories.innerHTML = "";
     categories.forEach(category => {
         const li = document.createElement("li");
-        li.innerHTML = `<a href="#" class="categories__link">${category.name}</a>`;
+        li.innerHTML = `<a href="#" class="categories__link">${category.nombre}</a>`;
         containerCategories.appendChild(li);
     });
 };

@@ -1,3 +1,7 @@
 export type Category = {
-    name: string;
+    id: number;
+    eliminado: boolean;
+    createdAt: string;
+    nombre: string;
+    descripcion: string;
 }
