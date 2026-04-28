@@ -27,7 +27,7 @@ if (searchInput) {
         productCards.forEach(card => {
             const title = card.querySelector('.product-card__title')?.textContent?.toLowerCase() || '';
             const category = card.querySelector('.product-card__category')?.textContent?.toLowerCase() || '';
-            
+
             const isVisible = title.includes(query) || category.includes(query);
 
             if (isVisible) {
@@ -57,6 +57,17 @@ const renderHome = async () => {
     }
 };
 
+// Función para actualizar el contador del carrito
+function cartCount(): void {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const count = cart.reduce((total: number, item: { quantity: number }) => total + item.quantity, 0);
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = count.toString();
+    }
+}
+cartCount();
+
 function renderProducts(products: Product[]): void {
     if (!containerProducts) return;
     containerProducts.innerHTML = "";
@@ -64,6 +75,20 @@ function renderProducts(products: Product[]): void {
         containerProducts.innerHTML = `<p class="no-products">No hay productos disponibles.</p>`;
         return;
     }
+
+    function addToCart(productId: number): void {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const existingProduct = cart.find((item: { id: number }) => item.id === productId);
+
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+        } else {
+            cart.push({ id: productId, quantity: 1 });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
     products.forEach(product => {
         const card = document.createElement("article");
         card.classList.add("product-card");
@@ -75,12 +100,21 @@ function renderProducts(products: Product[]): void {
                 <p class="product-card__desc">${product.descripcion}</p>
                 <div class="product-card__footer">
                 <span class="product-card__price">${product.precio}</span>
-                <button class="btn" type="button">Agregar</button>
+                <button class="btn add-to-cart" type="button">Agregar</button>
                 </div>
             </div>`;
         containerProducts.appendChild(card);
+
+        const addBtn = card.querySelector<HTMLButtonElement>('.add-to-cart');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
+                addToCart(product.id);
+                cartCount();
+            });
+        }
     });
 };
+
 
 function renderCategories(categories: Category[]): void {
     if (!containerCategories) return;
@@ -103,7 +137,7 @@ function renderCategories(categories: Category[]): void {
             e.preventDefault();
 
             const productCards = document.querySelectorAll('.product-card');
-            productCards.forEach(card => {                
+            productCards.forEach(card => {
                 const categoryText = card.querySelector('.product-card__category')?.textContent || '';
                 const isVisible = categoryText.toLowerCase() === category.nombre.toLowerCase();
                 (card as HTMLElement).style.display = isVisible ? 'flex' : 'none';
