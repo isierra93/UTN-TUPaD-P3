@@ -1,5 +1,6 @@
 import type { Product } from "../../types/Product";
 import type { Category } from "../../types/Category";
+import type { CartItem } from "../../types/CartItem";
 import { getProducts } from "../../utils/getProducts";
 import { getCategories } from "../../utils/getCategories";
 import { protectRoute } from "../../main";
@@ -77,13 +78,15 @@ function renderProducts(products: Product[]): void {
     }
 
     function addToCart(productId: number): void {
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
         const existingProduct = cart.find((item: { id: number }) => item.id === productId);
 
         if (existingProduct) {
             existingProduct.quantity += 1;
         } else {
-            cart.push({ id: productId, quantity: 1 });
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            cart.push({ id: productId, name: product.nombre, imageUrl: product.imagen, price: product.precio, quantity: 1, category: product.categorias[0]?.nombre || 'Sin categoría' });
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
