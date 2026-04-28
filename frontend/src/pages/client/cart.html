@@ -1,0 +1,45 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Food Store — Mi carrito</title>
+  <meta name="description" content="Carrito de compras de Food Store">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+  <div class="cart">
+    <!-- Cart Header -->
+    <header class="cart__header">
+      <h1 class="cart__title">Mi Carrito</h1>
+      <nav aria-label="Navegación carrito">
+        <a class="btn btn--ghost" href="../home/home.html">Volver a la Tienda</a>
+      </nav>
+    </header>
+
+    <!-- Cart Body -->
+    <main class="cart__body">
+        <section class="cart-items" aria-labelledby="cart-items-heading">
+            <h2 class="cart-items__heading" id="cart-items-heading">Productos en tu carrito</h2>
+            <div id="empty-cart" style="display: none; text-align: center; padding: var(--sp-lg);">
+                <p>Tu carrito está vacío. Agrega productos para comenzar tu pedido.</p>
+            </div>
+            <ul class="cart-items__list" id="cart-items-list"></ul>
+        </section>
+
+        <section class="cart-summary" aria-labelledby="cart-summary-heading">
+            <h2 class="cart-summary__heading" id="cart-summary-heading">Resumen del pedido</h2>
+            <p class="cart-summary__total">Total: $<span id="cart-total">0.00</span></p>
+            <button class="btn btn--primary" id="checkout-btn" disabled>Finalizar Compra</button>
+        </section>
+
+        <section>
+            <button class="btn btn--ghost" id="clear-cart-btn">Vaciar carrito</button>
+        </section>
+    </main>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer__text">Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
+    </footer>
+    <script type="module" src="./cart.js"></script>
+</body>
