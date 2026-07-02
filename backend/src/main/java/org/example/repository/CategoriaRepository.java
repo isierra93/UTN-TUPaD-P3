@@ -24,6 +24,22 @@ public class CategoriaRepository extends BaseRepository<Categoria> {
         }
     }
 
+    public void agregarProducto(Long categoriaId, Producto producto) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Categoria categoria = em.find(Categoria.class, categoriaId);
+            if (categoria == null) return;
+            categoria.agregarProducto(producto);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
     @Override
     public boolean eliminarLogico(Long id) {
         EntityManager em = emf.createEntityManager();

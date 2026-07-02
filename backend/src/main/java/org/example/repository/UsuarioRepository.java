@@ -2,7 +2,9 @@ package org.example.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import org.example.model.DetallePedido;
 import org.example.model.Pedido;
+import org.example.model.Producto;
 import org.example.model.Usuario;
 
 import java.util.List;
@@ -16,11 +18,32 @@ public class UsuarioRepository extends BaseRepository<Usuario>{
 
     public Optional<Usuario> buscarPorMail(String mail){
         EntityManager em = emf.createEntityManager();
-        String jpql = "SELECT u FROM Usuario u WHERE u.mail = :mail AND u.eliminado = false";
+        String jpql = "SELECT u FROM Usuario u WHERE u.mail =:mail AND u.eliminado = false";
         try {
             TypedQuery<Usuario> q = em.createQuery(jpql, Usuario.class);
-            List<Usuario> res = q.getResultList();
+            List<Usuario> res = q.setParameter("mail", mail).getResultList();
             return res.isEmpty() ? Optional.empty() : Optional.of(res.getFirst());
+        } finally {
+            em.close();
+        }
+    }
+
+    public Pedido crearPedido(Long usuarioId, Pedido pedido) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Usuario usuario = em.find(Usuario.class, usuarioId);
+            if (usuario == null) return null;
+            for (DetallePedido detalle : pedido.getDetalles()) {
+                Producto managed = em.find(Producto.class, detalle.getProducto().getId());
+                if (managed != null) detalle.setProducto(managed);
+            }
+            usuario.agregarPedido(pedido);
+            em.getTransaction().commit();
+            return pedido;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
         } finally {
             em.close();
         }
