@@ -1,9 +1,7 @@
 package org.example.repository;
 
 import jakarta.persistence.EntityManager;
-import org.example.model.DetallePedido;
 import org.example.model.Pedido;
-import org.example.model.Producto;
 import org.example.model.enums.Estado;
 
 import java.util.List;
@@ -14,6 +12,8 @@ public class PedidoRepository extends BaseRepository<Pedido> {
         super(Pedido.class);
     }
 
+    // Consulta JPQL: retorna todos los pedidos activos con un estado especifico.
+    // Util para filtrar PENDIENTE, CONFIRMADO, TERMINADO o CANCELADO.
     public List<Pedido> buscarPorEstado(Estado estado) {
         EntityManager em = emf.createEntityManager();
         String jpql = "SELECT p FROM Pedido p WHERE p.estado = :estado AND p.eliminado = false";
@@ -26,22 +26,14 @@ public class PedidoRepository extends BaseRepository<Pedido> {
         }
     }
 
+    // Cambia el estado de un pedido activo. Solo actualiza el campo estado; el stock
+    // no se modifica. Retorna false si el pedido no existe o esta dado de baja.
     public boolean cambiarEstado(Long id, Estado nuevoEstado) {
         EntityManager em = emf.createEntityManager();
         try {
-            em.getTransaction().begin();
             Pedido pedido = em.find(Pedido.class, id);
             if (pedido == null || pedido.isEliminado()) return false;
-
-            if (nuevoEstado == Estado.CANCELADO && pedido.getEstado() != Estado.CANCELADO) {
-                for (DetallePedido detalle : pedido.getDetalles()) {
-                    Producto prod = em.find(Producto.class, detalle.getProducto().getId());
-                    if (prod != null) {
-                        prod.setStock(prod.getStock() + detalle.getCantidad());
-                    }
-                }
-            }
-
+            em.getTransaction().begin();
             pedido.setEstado(nuevoEstado);
             em.getTransaction().commit();
             return true;
