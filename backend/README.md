@@ -1,7 +1,16 @@
-# TP JPA — Programación III (UTN)
+# FoodStore Backend
 
-Aplicación de consola desarrollada en Java con JPA (Hibernate) y base de datos H2 embebida.
-Implementa un ABM completo de Categorias y Productos con persistencia relacional.
+Backend de consola para el sistema FoodStore, desarrollado con Java y JPA/Hibernate como parte del Trabajo Práctico Integrador de la materia Programación 3 (UTN TUPaD).
+
+## Descripción
+
+Aplicación de consola interactiva que gestiona las entidades principales de una tienda de alimentos: Categorías, Productos, Usuarios y Pedidos. Utiliza JPA con Hibernate como proveedor de persistencia y una base de datos embebida H2 (archivo local). No requiere instalación de base de datos externa.
+
+El sistema permite:
+- ABM de Categorías (con baja lógica en cascada a Productos)
+- ABM de Productos (con validaciones de precio y stock)
+- ABM de Usuarios (con búsqueda por mail y control de roles)
+- Gestión de Pedidos (alta, cambio de estado, descuento y restauración de stock)
 
 ## Tecnologías
 
@@ -12,34 +21,16 @@ Implementa un ABM completo de Categorias y Productos con persistencia relacional
 - Lombok
 - Gradle
 
-## Estructura del proyecto
-
-```
-src/main/java/org/example/
-├── entities/          # Entidades JPA: Base, Categoria, Producto, Pedido, DetallePedido, Usuario
-├── enums/             # Enums: Estado, FormaPago, Rol
-├── repository/        # Repositorios: BaseRepository, CategoriaRepository, ProductoRepository
-├── util/              # JPAUtil: singleton del EntityManagerFactory
-└── Main.java          # Punto de entrada — menú de consola
-src/main/resources/
-└── META-INF/
-    └── persistence.xml
-```
-
-## Cómo ejecutar
-
-### Requisitos previos
+## Requisitos previos
 
 - JDK 17 o superior instalado
 - No requiere ninguna instalación adicional (Gradle Wrapper incluido)
 
-### Pasos
+## Instalación y ejecución
 
 1. Clonar o descomprimir el proyecto.
-
-2. Abrir una terminal en la carpeta raíz del proyecto.
-
-3. Ejecutar el siguiente comando:
+2. Abrir una terminal en la carpeta `backend/`.
+3. Ejecutar el menú interactivo:
 
 **Windows:**
 ```bash
@@ -51,34 +42,39 @@ src/main/resources/
 ./gradlew run
 ```
 
-4. La aplicación iniciará el menú principal en la consola:
+La base de datos H2 se crea automáticamente en `backend/data/mydb` en el primer arranque. Los datos persisten entre ejecuciones.
 
-```
-==============================
-       MENU PRINCIPAL
-==============================
-1. Gestionar Categorias
-2. Gestionar Productos
-3. Reportes
-0. Salir
+## Otros comandos
+
+```bash
+.\gradlew.bat build   # Compilar y ensamblar el JAR
+.\gradlew.bat test    # Ejecutar los tests
+.\gradlew.bat clean   # Limpiar los artefactos de compilación
 ```
 
-> La base de datos H2 se crea automáticamente en la carpeta `data/` al iniciar la aplicación.
-> El esquema se recrea en cada ejecución (`drop-and-create`).
+## Estructura del proyecto
 
-## Funcionalidades
-
-### Categorias
-- **Alta**: ingreso de nombre (obligatorio) y descripción. Muestra el ID generado.
-- **Baja lógica**: marca `eliminado = true`. El registro permanece en la BD.
-- **Modificación**: muestra valores actuales; dejar un campo vacío conserva el valor anterior.
-- **Listado**: muestra todas las categorías activas.
-
-### Productos
-- **Alta**: selección de categoría activa, ingreso de nombre, descripción, precio (> 0) y stock (≥ 0).
-- **Baja lógica**: marca `eliminado = true`. Muestra el nombre del producto afectado.
-- **Modificación**: muestra valores actuales; valida precio > 0 y stock ≥ 0.
-- **Listado**: muestra todos los productos activos con su categoría.
-
-### Reportes
-- **Productos por categoría**: consulta JPQL que filtra productos activos por categoría seleccionada.
+```
+src/main/java/org/example/
+├── Main.java                  # Menú de consola y lógica de interacción
+├── model/                     # Entidades JPA y enums
+│   ├── Base.java
+│   ├── Categoria.java
+│   ├── Producto.java
+│   ├── Usuario.java
+│   ├── Pedido.java
+│   ├── DetallePedido.java
+│   ├── Calculable.java
+│   └── enums/
+│       ├── Rol.java
+│       ├── Estado.java
+│       └── FormaPago.java
+├── repository/                # Capa de acceso a datos (JPA/JPQL)
+│   ├── BaseRepository.java
+│   ├── CategoriaRepository.java
+│   ├── ProductoRepository.java
+│   ├── UsuarioRepository.java
+│   └── PedidoRepository.java
+└── util/
+    └── JPAUtil.java           # Singleton de EntityManagerFactory
+```
