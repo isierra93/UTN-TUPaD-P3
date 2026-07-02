@@ -1,12 +1,10 @@
 package org.example.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import org.example.model.Categoria;
 import org.example.model.Producto;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class CategoriaRepository extends BaseRepository<Categoria> {
 
@@ -14,13 +12,13 @@ public class CategoriaRepository extends BaseRepository<Categoria> {
         super(Categoria.class);
     }
 
-    public Set<Producto> buscarProductosPorCategoria(Categoria categoria){
+    public List<Producto> buscarProductosPorCategoria(Long categoriaId){
         EntityManager em = emf.createEntityManager();
-        String jpql = "SELECT p FROM Categoria c JOIN c.productos as p WHERE c = :categoria";
+        String jpql = "SELECT p FROM Categoria c JOIN c.productos p WHERE c.id = :categoriaId AND p.eliminado = false";
         try {
-            TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
-            query.setParameter("categoria", categoria);
-            return new HashSet<>(query.getResultList());
+            return em.createQuery(jpql, Producto.class)
+                    .setParameter("categoriaId", categoriaId)
+                    .getResultList();
         } finally {
             em.close();
         }
