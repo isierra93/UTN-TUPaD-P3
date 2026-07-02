@@ -2,7 +2,7 @@ package org.example.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.example.entities.Base;
+import org.example.model.Base;
 import org.example.util.JPAUtil;
 
 import java.util.List;

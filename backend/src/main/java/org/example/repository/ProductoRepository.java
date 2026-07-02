@@ -2,7 +2,7 @@ package org.example.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.example.entities.Producto;
+import org.example.model.Producto;
 
 import java.util.List;
 
@@ -17,11 +17,10 @@ public class ProductoRepository extends BaseRepository<Producto> {
     @Override
     public List<Producto> listarActivos() {
         EntityManager em = emf.createEntityManager();
+        String jpql = "SELECT p FROM Producto p LEFT JOIN FETCH p.categoria WHERE p.eliminado = false";
         try {
-            return em.createQuery(
-                    "SELECT p FROM Producto p LEFT JOIN FETCH p.categoria WHERE p.eliminado = false",
-                    Producto.class
-            ).getResultList();
+            return em.createQuery(jpql, Producto.class)
+                    .getResultList();
         } finally {
             em.close();
         }
@@ -32,12 +31,9 @@ public class ProductoRepository extends BaseRepository<Producto> {
     // usando un parametro nombrado para evitar SQL injection y garantizar tipado seguro.
     public List<Producto> buscarPorCategoria(Long categoriaId) {
         EntityManager em = emf.createEntityManager();
+        String jpql = "SELECT p FROM Producto p WHERE p.categoria.id = :categoriaId AND p.eliminado = false";
         try {
-            TypedQuery<Producto> query = em.createQuery(
-                    "SELECT p FROM Producto p " +
-                    "WHERE p.categoria.id = :categoriaId AND p.eliminado = false",
-                    Producto.class
-            );
+            TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
             query.setParameter("categoriaId", categoriaId);
             return query.getResultList();
         } finally {

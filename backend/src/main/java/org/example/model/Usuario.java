@@ -1,9 +1,9 @@
-package org.example.entities;
+package org.example.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.example.enums.Rol;
+import org.example.model.enums.Rol;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

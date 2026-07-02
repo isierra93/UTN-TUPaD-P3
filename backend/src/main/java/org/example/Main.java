@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.entities.Categoria;
-import org.example.entities.Producto;
+import org.example.model.Categoria;
+import org.example.model.Producto;
 import org.example.repository.CategoriaRepository;
 import org.example.repository.ProductoRepository;
 import org.example.util.JPAUtil;

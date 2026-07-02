@@ -2,8 +2,8 @@ package org.example.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.example.entities.Categoria;
-import org.example.entities.Producto;
+import org.example.model.Categoria;
+import org.example.model.Producto;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,11 +16,9 @@ public class CategoriaRepository extends BaseRepository<Categoria> {
 
     public Set<Producto> buscarProductosPorCategoria(Categoria categoria){
         EntityManager em = emf.createEntityManager();
+        String jpql = "SELECT p FROM Categoria c JOIN c.productos as p WHERE c = :categoria";
         try {
-            TypedQuery<Producto> query = em.createQuery(
-                    "SELECT p FROM Categoria c JOIN c.productos as p WHERE c = :categoria",
-                    Producto.class
-            );
+            TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
             query.setParameter("categoria", categoria);
             return new HashSet<>(query.getResultList());
         } finally {

@@ -1,10 +1,10 @@
-package org.example.entities;
+package org.example.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.example.enums.Estado;
-import org.example.enums.FormaPago;
+import org.example.model.enums.Estado;
+import org.example.model.enums.FormaPago;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
