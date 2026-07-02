@@ -2,6 +2,7 @@ package org.example.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import lombok.Getter;
 import org.example.model.Base;
 import org.example.util.JPAUtil;
 
@@ -9,9 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseRepository<T extends Base> {
-
+    
     protected final Class<T> clazz;
     protected final EntityManagerFactory emf;
+
+    protected Class<T> getEntityClass(){
+        return clazz;
+    }
 
     protected BaseRepository(Class<T> clazz) {
         this.clazz = clazz;
@@ -22,7 +27,13 @@ public abstract class BaseRepository<T extends Base> {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            T resultado = em.merge(entity);
+            T resultado = null;
+            if (entity.getId() == null){
+                em.persist(entity);
+                resultado = entity;
+            } else {
+                resultado = em.merge(entity);
+            }
             em.getTransaction().commit();
             return resultado;
         } catch (Exception e) {
@@ -47,7 +58,7 @@ public abstract class BaseRepository<T extends Base> {
     public List<T> listarActivos() {
         EntityManager em = emf.createEntityManager();
         try {
-            String jpql = "SELECT e FROM " + clazz.getSimpleName() + " e WHERE e.eliminado = false";
+            String jpql = "SELECT e FROM " + getEntityClass().getSimpleName() + " e WHERE e.eliminado = false";
             return em.createQuery(jpql, clazz).getResultList();
         } finally {
             em.close();
@@ -63,6 +74,7 @@ public abstract class BaseRepository<T extends Base> {
             }
             em.getTransaction().begin();
             entity.setEliminado(true);
+            em.merge(entity);
             em.getTransaction().commit();
             return true;
         } catch (Exception e) {
