@@ -31,10 +31,6 @@ public class Pedido extends Base implements Calculable {
     @Enumerated(EnumType.STRING)
     private FormaPago formaPago;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
-
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Builder.Default
@@ -43,13 +39,12 @@ public class Pedido extends Base implements Calculable {
     private Set<DetallePedido> detalles = new HashSet<>();
 
     public Pedido(Long id, boolean eliminado, LocalDateTime createdAt,
-                  LocalDate fecha, Estado estado, FormaPago formaPago, Usuario usuario) {
+                  LocalDate fecha, Estado estado, FormaPago formaPago) {
         super(id, eliminado, createdAt);
         this.fecha = fecha;
         this.estado = estado;
         this.total = 0.0;
         this.formaPago = formaPago;
-        this.usuario = usuario;
         this.detalles = new HashSet<>();
     }
 

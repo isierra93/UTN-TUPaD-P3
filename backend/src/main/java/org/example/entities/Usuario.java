@@ -30,7 +30,8 @@ public class Usuario extends Base {
 
     @Setter(AccessLevel.NONE)
     @Builder.Default
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
     private Set<Pedido> pedidos = new HashSet<>();
 
     public Usuario(Long id, boolean eliminado, LocalDateTime createdAt,
@@ -52,7 +53,6 @@ public class Usuario extends Base {
 
     public boolean agregarPedido(Pedido pedido) {
         if (pedido == null) return false;
-        pedido.setUsuario(this);
         return pedidos.add(pedido);
     }
 
