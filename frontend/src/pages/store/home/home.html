@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../../style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Productos de Food Store">
   <title>Food Store - Catalálogo de productos</title>
@@ -12,10 +12,11 @@
             <a href="#" class="header__brand">Food<span>Store</span></a>
             <nav class="header__nav" aria-label="Navegación principal">
                 <ul class="header__nav-list">
-                    <li><a href="#" class="header__nav-link">Inicio</a></li>
-                    <li><a href="#" class="header__nav-link">Mis Pedidos</a></li>
-                    <li><a href="../client/cart.html" class="header__nav-link">Carrito <span id="cart-count">0</span></a></li>
-                    <li><a href="../admin/admin.html" class="header__nav-link">Admin</a></li>
+                    <li><a href="home.html" class="header__nav-link">Inicio</a></li>
+                    <li><a href="../../client/orders/orders.html" class="header__nav-link">Mis Pedidos</a></li>
+                    <li><a href="../cart/cart.html" class="header__nav-link">Carrito <span id="cart-count">0</span></a></li>
+                    <li><a href="../../admin/adminHome/adminHome.html" id="admin-link" class="header__nav-link">Admin</a></li>
+                    <li><a href="#" id="logout-btn" class="header__nav-link">Cerrar sesión</a></li>
                 </ul>
             </nav>
         </div>
@@ -47,6 +48,14 @@
                 <form class="search__form" role="search" action="#" method="get">
                     <label for="search" class="sr-only">Buscar productos</label>
                     <input class="search__input" id="search" name="q" type="search" placeholder="Buscar productos o categorias...">
+                    <label for="sort" class="sr-only">Ordenar productos</label>
+                    <select class="search__sort" id="sort" name="sort">
+                        <option value="">Ordenar por</option>
+                        <option value="name-asc">Nombre A-Z</option>
+                        <option value="name-desc">Nombre Z-A</option>
+                        <option value="price-asc">Precio: menor a mayor</option>
+                        <option value="price-desc">Precio: mayor a menor</option>
+                    </select>
                     <button class="btn" type="submit">Buscar</button>
                 </form>
             </section>

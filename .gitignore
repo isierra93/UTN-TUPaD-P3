@@ -34,4 +34,13 @@ skills-lock.json
 .gradle
 .idea
 *.pdf
-/backend/data/*
+
+# Base de datos H2 (backend, se genera en runtime)
+/backend/data/
+*.mv.db
+*.trace.db
+
+# Dependencias y builds (por si aparecen en la raíz)
+node_modules/
+dist/
+build/

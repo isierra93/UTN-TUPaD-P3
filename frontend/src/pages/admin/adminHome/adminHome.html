@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Panel de administración — Food Store">
+  <link rel="stylesheet" href="../../../style.css">
+  <title>Food Store — Administración</title>
+</head>
+
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <h2 class="admin-sidebar__brand">Food<span>Store</span> Admin</h2>
+      <nav class="admin-sidebar__nav" aria-label="Navegación admin">
+        <a class="admin-sidebar__link" href="adminHome.html">Dashboard</a>
+        <a class="admin-sidebar__link" href="../categories/categories.html">Categorías</a>
+        <a class="admin-sidebar__link" href="../products/products.html">Productos</a>
+        <a class="admin-sidebar__link" href="../orders/orders.html">Pedidos</a>
+        <a class="admin-sidebar__link" href="../../store/home/home.html">Ver Tienda</a>
+        <a class="admin-sidebar__link" href="#" id="logout-btn">Cerrar sesión</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+      <header class="admin__header">
+        <h1 class="admin__title">Dashboard</h1>
+      </header>
+
+      <!-- Tarjetas de estadísticas -->
+      <section class="stats-grid" aria-label="Estadísticas">
+        <article class="stat-card">
+          <span class="stat-card__label">Categorías</span>
+          <span class="stat-card__value" id="stat-categorias">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-card__label">Productos</span>
+          <span class="stat-card__value" id="stat-productos">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-card__label">Pedidos</span>
+          <span class="stat-card__value" id="stat-pedidos">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-card__label">Productos disponibles</span>
+          <span class="stat-card__value" id="stat-disponibles">—</span>
+        </article>
+      </section>
+
+      <!-- Panel de resumen -->
+      <section class="summary-panel" aria-label="Resumen">
+        <div class="summary-card">
+          <h3>Productos</h3>
+          <p>Disponibles: <strong id="resumen-disponibles">—</strong></p>
+          <p>No disponibles: <strong id="resumen-no-disponibles">—</strong></p>
+        </div>
+        <div class="summary-card">
+          <h3>Pedidos por estado</h3>
+          <ul id="resumen-estados" class="summary-estados"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="adminHome.ts"></script>
+</body>
+
+</html>

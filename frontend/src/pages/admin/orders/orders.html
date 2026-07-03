@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gestión de pedidos — Food Store">
+  <link rel="stylesheet" href="../../../style.css">
+  <title>Food Store — Gestión de Pedidos</title>
+</head>
+
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <h2 class="admin-sidebar__brand">Food<span>Store</span> Admin</h2>
+      <nav class="admin-sidebar__nav" aria-label="Navegación admin">
+        <a class="admin-sidebar__link" href="../adminHome/adminHome.html">Dashboard</a>
+        <a class="admin-sidebar__link" href="../categories/categories.html">Categorías</a>
+        <a class="admin-sidebar__link" href="../products/products.html">Productos</a>
+        <a class="admin-sidebar__link" href="orders.html">Pedidos</a>
+        <a class="admin-sidebar__link" href="../../store/home/home.html">Ver Tienda</a>
+        <a class="admin-sidebar__link" href="#" id="logout-btn">Cerrar sesión</a>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin__header">
+        <h1 class="admin__title">Gestión de Pedidos</h1>
+        <div class="form-field">
+          <label class="form-field__label" for="estado-filter">Filtrar por estado</label>
+          <select class="form-field__select" id="estado-filter">
+            <option value="">Todos</option>
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="CONFIRMADO">Confirmado</option>
+            <option value="TERMINADO">Terminado</option>
+            <option value="CANCELADO">Cancelado</option>
+          </select>
+        </div>
+      </header>
+
+      <div id="admin-orders-empty" class="orders__empty" style="display: none;">
+        <p>No hay pedidos para mostrar.</p>
+      </div>
+      <div id="admin-orders-list" class="orders__list"></div>
+    </main>
+  </div>
+
+  <!-- Modal de detalle + cambio de estado -->
+  <div id="order-modal" class="modal" style="display: none;">
+    <div class="modal__backdrop" id="modal-backdrop"></div>
+    <div class="modal__content" role="dialog" aria-modal="true">
+      <button class="modal__close" id="modal-close" aria-label="Cerrar">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="orders.ts"></script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Food Store — Mi carrito</title>
     <meta name="description" content="Carrito de compras de Food Store">
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../../style.css">
 </head>
 
 <body>
@@ -14,6 +14,7 @@
             <h1 class="admin__title">Mi carrito</h1>
             <nav aria-label="Navegación admin">
                 <a class="btn btn--ghost" href="../home/home.html">Volver a la Tienda</a>
+                <a class="btn btn--ghost" href="#" id="logout-btn">Cerrar sesión</a>
             </nav>
         </header>
         <!-- Cart Body -->
@@ -22,6 +23,7 @@
                 <h2 class="table-section__heading" id="inventory-heading">Productos en tu carrito</h2>
                 <div id="empty-cart" style="display: none; text-align: center; padding: var(--sp-lg);">
                     <p>Tu carrito está vacío. Agrega productos para comenzar tu pedido.</p>
+                    <a class="btn btn--primary" href="../home/home.html">Ir a la tienda</a>
                 </div>
                 <div class="table-responsive" id="item-cart">
                     <table class="table-desktop" aria-describedby="inventory-desc">
@@ -39,11 +41,40 @@
 
                         </tbody>
                     </table>
+
+                    <!-- Resumen del pedido -->
+                    <div class="cart-summary">
+                        <p><span>Subtotal:</span> <span>$<span id="cart-subtotal">0.00</span></span></p>
+                        <p><span>Envío:</span> <span>$<span id="cart-envio">0.00</span></span></p>
+                        <p class="cart-summary__total"><span>Total:</span> <span>$<span id="cart-total">0.00</span></span></p>
+                    </div>
+
                     <div class="bottom-cart">
                         <button class="btn btn--ghost" id="clear-cart-btn">Vaciar carrito</button>
-                        <p class="cart-summary__total">Total: $ <span id="cart-total">0.00</span></p>
                         <button class="btn btn--primary" id="checkout-btn" disabled>Finalizar Compra</button>
                     </div>
+
+                    <!-- Formulario de checkout -->
+                    <form class="checkout-form" id="checkout-form" style="display: none;" action="#" method="post">
+                        <h3 class="checkout-form__heading">Datos de la compra</h3>
+                        <div class="form-field">
+                            <label class="form-field__label" for="checkout-celular">Teléfono de contacto</label>
+                            <input class="form-field__input" id="checkout-celular" name="celular" type="tel"
+                                placeholder="Ej: 1198765432" required>
+                        </div>
+                        <div class="form-field">
+                            <label class="form-field__label" for="checkout-pago">Forma de pago</label>
+                            <select class="form-field__select" id="checkout-pago" name="formaPago" required>
+                                <option value="" disabled selected>Seleccioná una opción</option>
+                                <option value="TARJETA">Tarjeta</option>
+                                <option value="TRANSFERENCIA">Transferencia</option>
+                                <option value="EFECTIVO">Efectivo</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn--full btn--primary" type="submit">Confirmar pedido</button>
+                        </div>
+                    </form>
                 </div>
 
             </section>
@@ -53,5 +84,5 @@
     <footer class="footer">
         <p class="footer__text">Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
     </footer>
-    <script type="module" src="./cart.js"></script>
+    <script type="module" src="cart.ts"></script>
 </body>

@@ -1,199 +1,109 @@
-# Frontend - Aplicación Web de E-commerce
+# FoodStore Frontend
 
-Una aplicación web moderna de e-commerce construida con **TypeScript** y **Vite**, diseñada para ofrecer una experiencia de compra fluida con autenticación de usuarios y gestión de carrito.
+Interfaz web del sistema **FoodStore**, desarrollada con **TypeScript + Vite** (HTML5 y CSS3, sin framework) como parte del Trabajo Práctico Integrador de Programación 3 (UTN TUPaD).
 
-## Descripción del Proyecto
+## Descripción
 
-Este proyecto es una aplicación frontend para una plataforma de e-commerce que permite a los usuarios:
-- Explorar catálogo de productos (alimentos/comidas)
-- Registrarse e iniciar sesión
-- Agregar productos al carrito
-- Ver y gestionar pedidos
-- Panel administrativo para gestionar productos y categorías
+Aplicación web multi-página (MPA) para una tienda de comida. En esta iteración el frontend consume todos sus datos desde archivos `.json` locales mediante `fetch()`, de modo que los flujos de usuario funcionan de forma independiente al backend. La capa de fetch está aislada: para conectar la API REST de la Parte 2 basta con reemplazar la URL de cada `fetch` (ej. `/data/productos.json` → `/api/products`).
 
-## Estructura del Proyecto (Scaffolding)
+Funcionalidades:
+- **Autenticación** con roles (ADMIN / USUARIO), sesión persistida en `localStorage`.
+- **Catálogo**: filtro por categoría, búsqueda en tiempo real y ordenamiento (nombre / precio).
+- **Detalle de producto** con selector de cantidad y validación de stock.
+- **Carrito** persistente en `localStorage` con subtotal, envío y total.
+- **Checkout** que genera el pedido en `localStorage` e **Historial de pedidos** del cliente.
+- **Panel de administración**: dashboard con estadísticas, y ABM de categorías, productos y pedidos.
+
+## Tecnologías
+
+- TypeScript ~5.9
+- Vite ^8 (build multi-página)
+- HTML5, CSS3
+- Persistencia y sesión: `localStorage`
+
+## Requisitos previos
+
+- Node.js 18 o superior
+- npm
+
+## Instalación y ejecución
+
+```bash
+cd frontend
+npm install
+npm run dev      # servidor de desarrollo en http://localhost:5173
+```
+
+Otros scripts:
+
+```bash
+npm run build    # type-check (tsc) + build de producción en dist/
+npm run preview  # sirve la build de producción localmente
+```
+
+## Credenciales de prueba
+
+| Rol | Email | Contraseña |
+|-----|-------|-----------|
+| **ADMIN** | `admin@admin.com` | `123456` |
+| **USUARIO** (cliente) | `cliente@food.com` | `cliente123` |
+
+Al iniciar sesión, un ADMIN es redirigido al panel de administración y un USUARIO al catálogo. También podés registrarte como cliente (rol USUARIO) desde la página de registro.
+
+## Fuente de datos
+
+Los datos de prueba están en `public/data/` y se consumen por `fetch()`:
+
+| Archivo | Contenido |
+|---------|-----------|
+| `categorias.json` | `id, nombre, descripcion, imagen, eliminado` |
+| `productos.json` | `id, nombre, precio, descripcion, stock, imagen, disponible, eliminado, categoriaId` |
+| `usuarios.json` | `id, nombre, apellido, mail, celular, password, rol` |
+| `pedidos.json` | `id, fecha, estado, total, formaPago, idUsuario, detalles[]` |
+
+Las relaciones se modelan con **identificadores planos** (`categoriaId`, `idUsuario`, `idProducto`).
+
+### Nota sobre la persistencia
+
+- El **carrito**, la **sesión** (`userData`) y los **pedidos generados en el checkout** se guardan en `localStorage`.
+- Las operaciones de escritura del **panel de administración** (crear / editar / eliminar categorías, productos y cambiar estado de pedidos) se aplican **solo en memoria**: al recargar la página se pierde el estado modificado. Esto es intencional para esta iteración; en la siguiente se conectará al backend.
+
+### Costo de envío
+
+El envío es una **constante fija** definida en `src/utils/config.ts`:
+
+```ts
+export const ENVIO = 5500;
+```
+
+El total de un pedido se calcula como `subtotal + ENVIO`.
+
+## Estructura del proyecto
 
 ```
 frontend/
+├── public/
+│   └── data/                     # JSON de prueba (fetch)
+│       ├── categorias.json
+│       ├── productos.json
+│       ├── usuarios.json
+│       └── pedidos.json
 ├── src/
-│   ├── pages/                    # Páginas de la aplicación
-│   │   ├── home/
-│   │   │   ├── home.html
-│   │   │   └── home.ts
-│   │   ├── auth/
-│   │   │   ├── login/
-│   │   │   │   └── login.html
-│   │   │   └── register/
-│   │   │       └── register.html
-│   │   ├── client/
-│   │   │   ├── cart.html
-│   │   │   └── myorders.html
-│   │   └── admin/
-│   │       └── admin.html
-│   ├── types/                    # Tipos TypeScript
-│   │   ├── Product.ts
-│   │   ├── User.ts
-│   │   └── UserRole.ts
-│   ├── utils/                    # Funciones utilitarias
-│   │   ├── getCategories.ts
-│   │   ├── getProducts.ts
-│   │   └── navigate.ts
-│   ├── assets/                   # Recursos (imágenes)
-│   │   ├── hero.png
-│   │   ├── pizza.jpg
-│   │   ├── hamburguesa.jpg
-│   │   ├── sandwich_pollo.jpg
-│   │   ├── ensalada_cesar.jpg
-│   │   └── tarta_manzana.jpg
-│   ├── style.css                 # Estilos globales
-│   ├── main.ts                   # Punto de entrada
-│   └── datos.js                  # Datos de ejemplo
-├── public/                        # Archivos públicos estáticos
-│   ├── favicon.svg
-│   └── icons.svg
-├── dist/                          # Build compilado (generado)
-├── index.html                     # HTML principal
-├── package.json                   # Dependencias y scripts
-├── tsconfig.json                  # Configuración TypeScript
-├── vite.config.js                 # Configuración Vite
-├── .gitignore                     # Archivos a ignorar en Git
-└── package-lock.json              # Versiones exactas de dependencias
+│   ├── main.ts                   # protectRoute() — guardas de ruta por rol
+│   ├── style.css                 # estilos globales
+│   ├── types/                    # Category, Product, User, Rol, Pedido, DetallePedido, CartItem
+│   ├── utils/                    # capa de fetch, sesión, carrito, navegación, config (ENVIO)
+│   └── pages/
+│       ├── auth/{login,register}/
+│       ├── store/{home,productDetail,cart}/
+│       ├── client/orders/        # historial de pedidos del cliente
+│       └── admin/{adminHome,categories,products,orders}/
+├── index.html                    # redirección inicial
+├── vite.config.ts                # entradas del build multi-página
+├── tsconfig.json
+└── package.json
 ```
 
-## Tecnologías Utilizadas
+## Notas de seguridad (solo fines educativos)
 
-| Herramienta | Versión | Propósito |
-|-----------|---------|----------|
-| **TypeScript** | ~5.9.3 | Tipado estático y mejora de código |
-| **Vite** | ^8.0.1 | Build tool y dev server |
-| **Node.js/ES2023** | ES2023 | Target JavaScript moderno |
-
-## Requisitos Previos
-
-- **Node.js** (versión 16 o superior)
-- **npm** (incluido con Node.js)
-
-## Instalación
-
-1. Clona o descarga el proyecto:
-```bash
-cd frontend
-```
-
-2. Instala las dependencias:
-```bash
-npm install
-```
-
-## Scripts Disponibles
-
-### Desarrollo
-```bash
-npm run dev
-```
-Inicia el servidor de desarrollo con hot reload. La aplicación estará disponible en `http://localhost:5173`
-
-### Build
-```bash
-npm run build
-```
-Compila TypeScript y genera la build optimizada en la carpeta `dist/`
-
-### Preview
-```bash
-npm run preview
-```
-Visualiza la build compilada localmente antes de desplegar
-
-## Características Principales
-
-### 🏠 Página de Inicio (Home)
-- Catálogo de productos
-- Filtrado por categorías
-- Visualización de detalles de productos
-
-### 🔐 Autenticación
-- Página de login
-- Página de registro
-- Gestión de roles de usuario (cliente/admin)
-
-### 🛒 Carrito de Compras
-- Agregar/eliminar productos
-- Modificar cantidades
-- Ver total de compra
-
-### 👤 Área de Cliente
-- Historial de pedidos
-- Gestión de perfil
-
-### ⚙️ Panel Administrativo
-- Gestión de productos
-- Gestión de categorías
-- Estadísticas
-
-## Tipos de Datos
-
-### Product
-```typescript
-interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  category: string
-  image: string
-  stock: number
-}
-```
-
-### User
-```typescript
-interface User {
-  id: string
-  email: string
-  name: string
-  role: UserRole
-}
-```
-
-### UserRole
-- `admin`: Administrador del sistema
-- `client`: Cliente de la tienda
-
-## Funciones Utilitarias
-
-- **`getProducts()`**: Obtiene el listado de productos
-- **`getCategories()`**: Obtiene las categorías disponibles
-- **`navigate(path)`**: Navega entre páginas de la aplicación
-
-## Configuración de TypeScript
-
-La configuración es estricta y moderna:
-- Target: **ES2023**
-- Modo módulo: **ESNext**
-- Incluye validaciones estrictas (no unused variables, no any, etc.)
-- Soporte para importación de extensiones TS
-
-## Build
-
-La configuración de Vite usa múltiples puntos de entrada (multi-page app):
-- `index.html`: Página principal
-- `src/pages/home.html`: Página de inicio
-
-Puedes descomentar más puntos de entrada en `vite.config.js` según necesites.
-
-## Próximos Pasos
-
-- [ ] Implementar conexión a API backend
-- [ ] Completar formularios de registro y login
-- [ ] Crear lógica del carrito de compras
-- [ ] Implementar sistema de pagos
-- [ ] Agregar más páginas del admin
-
-## Licencia
-
-Este proyecto es privado.
-
----
-
-**Desarrollado con TypeScript + Vite** 🚀
+Este proyecto **no** implementa seguridad real: las contraseñas se comparan en texto plano contra el JSON, no hay tokens y la validación de rol es únicamente en el frontend (`localStorage` es fácilmente modificable).

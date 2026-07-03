@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mis pedidos — Food Store">
+  <link rel="stylesheet" href="../../../style.css">
+  <title>Food Store — Mis Pedidos</title>
+</head>
+
+<body>
+  <header class="admin__header">
+    <h1 class="admin__title">Mis Pedidos</h1>
+    <nav aria-label="Navegación">
+      <a class="btn btn--ghost" href="../../store/home/home.html">Volver a la Tienda</a>
+      <a class="btn btn--ghost" href="#" id="logout-btn">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="orders">
+    <div id="orders-empty" class="orders__empty" style="display: none;">
+      <p>Todavía no tenés pedidos.</p>
+      <a class="btn btn--primary" href="../../store/home/home.html">Ir a la tienda</a>
+    </div>
+    <div id="orders-list" class="orders__list"></div>
+  </main>
+
+  <!-- Modal de detalle -->
+  <div id="order-modal" class="modal" style="display: none;">
+    <div class="modal__backdrop" id="modal-backdrop"></div>
+    <div class="modal__content" role="dialog" aria-modal="true">
+      <button class="modal__close" id="modal-close" aria-label="Cerrar">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p class="footer__text">Contacto: contacto@foodstore.example — Tel: +54 9 11 0000 0000</p>
+  </footer>
+
+  <script type="module" src="orders.ts"></script>
+</body>
+
+</html>

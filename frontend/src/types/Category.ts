@@ -1,7 +1,7 @@
-export type Category = {
+export interface Category {
     id: number;
-    eliminado: boolean;
-    createdAt: string;
     nombre: string;
     descripcion: string;
+    imagen: string;
+    eliminado: boolean;
 }

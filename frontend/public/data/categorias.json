@@ -1,0 +1,7 @@
+[
+  { "id": 1, "nombre": "Hamburguesas", "descripcion": "Hamburguesas artesanales con carne premium", "imagen": "https://foodish-api.com/images/burger/burger1.jpg", "eliminado": false },
+  { "id": 2, "nombre": "Pizzas", "descripcion": "Pizzas al horno de barro", "imagen": "https://foodish-api.com/images/pizza/pizza1.jpg", "eliminado": false },
+  { "id": 3, "nombre": "Empanadas", "descripcion": "Empanadas caseras horneadas", "imagen": "", "eliminado": false },
+  { "id": 4, "nombre": "Bebidas", "descripcion": "Bebidas frias y calientes", "imagen": "", "eliminado": false },
+  { "id": 5, "nombre": "Papas Fritas", "descripcion": "Acompaniamientos crujientes", "imagen": "", "eliminado": false }
+]

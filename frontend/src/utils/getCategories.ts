@@ -1,18 +1,13 @@
 import type { Category } from "../types/Category";
-import { categorias } from "../data/data";
 
-
-/* export const getCategories = async (): Promise<Category[]> => {
+// Obtiene las categorias desde el JSON local. Reemplazable por "/api/categories".
+export const getCategories = async (): Promise<Category[]> => {
     try {
-        const result = await fetch("/api/v1/categorias");
-        const data = await result.json();
-        return data as Category[];
+        const response = await fetch("/data/categorias.json");
+        const data = (await response.json()) as Category[];
+        return data.filter((c) => !c.eliminado);
     } catch (error) {
-        console.error("Error fetching categories:", error); 
+        console.error("Error fetching categories:", error);
         return [];
     }
-} */
-
-export const getCategories = async (): Promise<Category[]> => {
-  return categorias.filter((c) => !c.eliminado);
-}
+};

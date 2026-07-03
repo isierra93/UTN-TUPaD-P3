@@ -1,9 +1,9 @@
-import type { Product } from "../../types/Product";
-import type { Category } from "../../types/Category";
-import type { CartItem } from "../../types/CartItem";
-import { getProducts } from "../../utils/getProducts";
-import { getCategories } from "../../utils/getCategories";
-import { protectRoute } from "../../main";
+import type { Product } from "../../../types/Product";
+import type { Category } from "../../../types/Category";
+import type { CartItem } from "../../../types/CartItem";
+import { getProducts } from "../../../utils/getProducts";
+import { getCategories } from "../../../utils/getCategories";
+import { protectRoute } from "../../../main";
 
 protectRoute();
 
@@ -45,12 +45,42 @@ if (searchInput) {
     });
 }
 
-//Agregar render condicional de admin button
+// Ordenamiento del catalogo: reordena las tarjetas ya renderizadas, conservando
+// los filtros de categoria/busqueda (que operan por display).
+const sortSelect = document.querySelector<HTMLSelectElement>('#sort');
+if (sortSelect) {
+    sortSelect.addEventListener('change', () => {
+        if (!containerProducts) return;
+        const value = sortSelect.value;
+        if (!value) return;
+        const cards = Array.from(containerProducts.querySelectorAll<HTMLElement>('.product-card'));
+        cards.sort((a, b) => {
+            const nameA = a.dataset.name || '';
+            const nameB = b.dataset.name || '';
+            const priceA = parseFloat(a.dataset.price || '0');
+            const priceB = parseFloat(b.dataset.price || '0');
+            switch (value) {
+                case 'name-asc': return nameA.localeCompare(nameB);
+                case 'name-desc': return nameB.localeCompare(nameA);
+                case 'price-asc': return priceA - priceB;
+                case 'price-desc': return priceB - priceA;
+                default: return 0;
+            }
+        });
+        cards.forEach(card => containerProducts.appendChild(card));
+    });
+}
+
+// Mapa id -> nombre de categoria para resolver la categoria de cada producto
+// (la relacion es por categoriaId; el producto no lleva el objeto categoria).
+let categoryMap = new Map<number, string>();
 
 const renderHome = async () => {
     try {
-        const products: Product[] = await getProducts();
         const categories: Category[] = await getCategories();
+        categoryMap = new Map(categories.map(c => [c.id, c.nombre]));
+
+        const products: Product[] = (await getProducts()).filter(p => p.disponible);
         renderProducts(products);
         renderCategories(categories);
     } catch (error) {
@@ -86,7 +116,14 @@ function renderProducts(products: Product[]): void {
         } else {
             const product = products.find(p => p.id === productId);
             if (!product) return;
-            cart.push({ id: productId, name: product.nombre, imageUrl: product.imagen, price: product.precio, quantity: 1, category: product.categorias[0]?.nombre || 'Sin categoría' });
+            cart.push({
+                id: productId,
+                name: product.nombre,
+                imageUrl: product.imagen,
+                price: product.precio,
+                quantity: 1,
+                category: categoryMap.get(product.categoriaId) || 'Sin categoría'
+            });
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
@@ -95,10 +132,12 @@ function renderProducts(products: Product[]): void {
     products.forEach(product => {
         const card = document.createElement("article");
         card.classList.add("product-card");
+        card.dataset.name = product.nombre;
+        card.dataset.price = product.precio.toString();
         card.innerHTML = `
             <img class="product-card__image" src="${product.imagen}" alt="${product.descripcion}" onerror="this.src='https://cdn.producttutor.com/2022/10/16451874451570033394image1-min-ib7z19a601i3rol733qs1.png'">
             <div class="product-card__body">
-                <span class="product-card__category">${product.categorias[0]?.nombre || 'Sin categoría'}</span>
+                <span class="product-card__category">${categoryMap.get(product.categoriaId) || 'Sin categoría'}</span>
                 <h3 class="product-card__title">${product.nombre}</h3>
                 <p class="product-card__desc">${product.descripcion}</p>
                 <div class="product-card__footer">
@@ -108,15 +147,22 @@ function renderProducts(products: Product[]): void {
             </div>`;
         containerProducts.appendChild(card);
 
+        // Click en la tarjeta -> detalle del producto.
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            window.location.href = `../productDetail/productDetail.html?id=${product.id}`;
+        });
+
         const addBtn = card.querySelector<HTMLButtonElement>('.add-to-cart');
         if (addBtn) {
-            addBtn.addEventListener('click', () => {
+            addBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // no navegar al detalle al agregar
                 addToCart(product.id);
                 cartCount();
             });
         }
     });
-};
+}
 
 
 function renderCategories(categories: Category[]): void {
@@ -149,6 +195,6 @@ function renderCategories(categories: Category[]): void {
 
         containerCategories.appendChild(li);
     });
-};
+}
 
 renderHome();
